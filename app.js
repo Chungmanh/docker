@@ -5,6 +5,8 @@ require("dotenv").config({
 });
 
 const apiMongodb = require("./routes/mongodb.route");
+const apiRedis = require("./routes/redis.route");
+
 const cors = require("cors");
 const connect = require("./connectDB");
 const app = express();
@@ -18,9 +20,12 @@ app.use(express.json()); // for parsing application/json
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
 // });
+
 connect();
 
 app.use("/mongodb", apiMongodb);
+app.use("/redis", apiRedis);
+
 // app.use("/redis", apiRedis);
 // app.use("/elasticsearch", apiElasticsearch);
 

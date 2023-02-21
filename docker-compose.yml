@@ -18,17 +18,17 @@ services:
     container_name: my-mongodb
     ports:
       - 27018:27017
-    # env_file:
-    #   - ./production.env
-    # environment:
-    #   - MONGO_INITDB_DATABASE=${test}
-    #   - MONGO_INITDB_ROOT_USERNAME=${BD_USERNAME}
-    #   - MONGO_INITDB_ROOT_PASSWORD=${BD_PASSWORD}
-
+    env_file:
+      - ./production.env
     environment:
-      - MONGO_INITDB_DATABASE=test
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=${test}
+      - MONGO_INITDB_ROOT_USERNAME=${BD_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${BD_PASSWORD}
+
+    # environment:
+    #   - MONGO_INITDB_DATABASE=test
+    #   - MONGO_INITDB_ROOT_USERNAME=admin 
+    #   - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
       - mongodb:/data/db
       - mongoconfig:/data/configdb
