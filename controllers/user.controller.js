@@ -9,6 +9,15 @@ exports.getAllUser = async () => {
   }
 };
 
+exports.getUser = async (id) => {
+  try {
+    const user = await userModel.findById(id);
+    return user;
+  } catch (error) {
+    console.log("error: ", error);
+  }
+};
+
 exports.addUser = async (user) => {
   try {
     const created = await userModel.create(user);
@@ -20,13 +29,12 @@ exports.addUser = async (user) => {
 
 exports.updateUser = async (id, user) => {
   try {
-    const updated = await userModel.findByIdAndUpdate(id, user)
+    const updated = await userModel.findByIdAndUpdate(id, user);
     return updated;
   } catch (error) {
     console.log(error);
   }
 };
-
 
 exports.deleteUser = async (id) => {
   try {
@@ -35,4 +43,4 @@ exports.deleteUser = async (id) => {
   } catch (error) {
     console.log("error: ", error);
   }
-}
+};

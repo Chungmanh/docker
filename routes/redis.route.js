@@ -1,26 +1,50 @@
 const express = require("express");
 const router = express.Router();
-// const redis = require("../redisService")
-const { createClient } = require('redis');
+const redis = require("../controllers/redis.controller");
 
 router.get("/test", async (req, res) => {
-    res.json("redis test");
-  });
+  res.json("redis test");
+});
 
-// router.post("/post", async (req, res) => {
-//     const client = createClient();
+router.get("/users", async (req, res) => {
+  await redis.connectRedis();
+  const users = await redis.getAllUser();
+  res.json(users);
+  await redis.disconnectRedis();
+});
 
-// client.on('error', err => console.log('Redis Client Error', err));
+router.get("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log("id: ", id);
+  await redis.connectRedis();
+  const user = await redis.getUser(id);
+  res.json(user);
+  await redis.disconnectRedis();
+});
 
-// await client.connect();
+router.post("/users", async (req, res) => {
+  await redis.connectRedis();
+  const user = await redis.addUser(req.body);
+  res.json(user);
+  await redis.disconnectRedis();
+});
 
-// await client.set('key', 'value');
-// const value = await client.get('key');
-// res.json(value)
-// await client.disconnect();
-// })
+router.put("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log("id: ", id);
+  await redis.connectRedis();
+  const user = await redis.updateUser(id, req.body);
+  res.json(user);
+  await redis.disconnectRedis();
+});
 
-
-
+router.delete("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log("id: ", id);
+  await redis.connectRedis();
+  const user = await redis.deleteUser(id);
+  res.json(user);
+  await redis.disconnectRedis();
+});
 
 module.exports = router;

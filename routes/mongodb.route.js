@@ -12,24 +12,30 @@ router.get("/users", async (req, res) => {
   res.json(users);
 });
 
+router.get("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await userController.getUser(id);
+  res.json(user);
+});
+
 router.post("/users", async (req, res) => {
   const user = await userController.addUser(req.body);
   res.json(user);
 });
 
 router.put("/users/:id", async (req, res) => {
-  console.log("req.params: ",req.params);
-  const {id} = req.params
-  const user = await userController.updateUser(id, req.body)
+  console.log("req.params: ", req.params);
+  const { id } = req.params;
+  const user = await userController.updateUser(id, req.body);
   res.json(user);
-})
+});
 
 router.delete("/users/:id", async (req, res) => {
-  console.log("req.params: ",req.params);
-  const {id} = req.params
+  console.log("req.params: ", req.params);
+  const { id } = req.params;
   const user = await userController.deleteUser(id);
 
-  res.json(user)
-})
+  res.json(user);
+});
 
 module.exports = router;
